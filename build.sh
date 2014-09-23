@@ -3,8 +3,7 @@
 CONTAINER="sacharya/apache"
 RUNNING=$(sudo docker ps | grep $CONTAINER | awk '{print $1}')
 if [ -z $RUNNING ]; then
-  echo "UNKNOWN - $CONTAINER does not exist."
-  # create apache container
+  echo "$CONTAINER does not exist."
   sudo docker build -t $CONTAINER apache
   sudo docker run -p 8001:80 -d $CONTAINER
   # curl http://127.0.0.1:8001
@@ -13,8 +12,7 @@ fi
 CONTAINER="sacharya/mysql"
 RUNNING=$(sudo docker ps -a | grep $CONTAINER | awk '{print $1}')
 if [ -z $RUNNING ]; then
-  echo "UNKNOWN - $CONTAINER does not exist."
-  # create mysql container
+  echo "$CONTAINER does not exist."
   sudo docker build -t $CONTAINER mysql
   sudo docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password123 -d $CONTAINER
   # mysql -u root -h 127.0.0.1 -p 
@@ -25,8 +23,7 @@ HOST_IP=`ifconfig eth0 | grep inet | head -n1 | cut -d":" -f2 | cut -d" " -f1`
 CONTAINER="sacharya/wordpress"
 RUNNING=$(sudo docker ps -a | grep $CONTAINER | awk '{print $1}')
 if [ -z $RUNNING ]; then
-  echo "UNKNOWN - $CONTAINER does not exist."
-  # create wordpress container
+  echo "$CONTAINER does not exist."
   sudo docker build -t $CONTAINER wordpress
   sudo docker run -p 8002:80 -e DB_PASSWORD=password123 -e DB_1_PORT_3306_TCP_ADDR=$HOST_IP -e DB_1_PORT_3306_TCP_PORT=3306 -e DB_NAME=wordpressdb -d $CONTAINER
 fi
